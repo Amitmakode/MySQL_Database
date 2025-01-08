@@ -1,0 +1,83 @@
+
+
+show tables ;
+
+select * from employees ;
+
+select * from customers ;
+
+select employee_id, employee_name from employees 
+union
+select customerID, customername from customers ;
+
+select employee_id, employee_name, salary from employees 
+union all
+select employee_id, employee_name from employees  ;
+
+
+select employee_id, employee_name from employees 
+union all
+select employee_id, employee_name from employees 
+union all
+select customerID, customername from customers ;
+
+
+select employee_id, employee_name from employees 
+union
+select customername , customerID  from customers ;
+
+------------------------------------------------------
+
+use bulk_load ;
+
+show tables ;
+
+select * from sales ;
+
+create view new_table as
+select order_id, new_order_date, segment, country, sub_category, sales, quantity, profit from sales ;
+
+select * from new_table ;
+
+update new_table
+set sales = 11 where sales = 0 ;
+
+select * from bank ;
+
+
+create view bank_sales as
+select b.`day`,s.sales,  b.age, b.job, b.marital, b.balance,
+ s.segment, s.country, s.sub_category,  s.quantity
+from bank b join sales s 
+on  b.`day` =  s.sales ;
+
+select * from bank_sales ;
+
+use joinn ;
+
+show tables ;
+
+select * from customers ;
+
+select * from orders ;
+
+create view v1 as select c.customerid, c.customername, c.country, o.orderdate, o.quantity
+from customers c join orders o
+on c.customerid = o.customerid ;
+
+select * from v1 ;
+
+
+create view v2 as
+select employee_id, employee_name from employees 
+union
+select customerID, customername from customers ;
+
+select * from v2 ;
+
+SELECT * 
+FROM customers
+NATURAL JOIN orders;
+
+
+

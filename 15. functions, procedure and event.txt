@@ -1,0 +1,115 @@
+-- user define function
+
+DELIMITER $$
+create function function1(A INT)
+returns INT 
+DETERMINISTIC
+BEGIN 
+	DECLARE B int ;
+	set B = A + 10 ;
+	return B ;
+end $$
+
+select age , function1(age) from bank ;
+
+
+select student_name, score, function1(score, 3) from students ;
+
+
+select age, function1(age, 15) from  bank ;
+
+use bulk_load ;
+
+select age, win_fun.function1(age, 10) from bank ;
+
+select * from sales ;
+
+
+Delimiter $$
+create function GST(a int, b int, c int)
+returns int
+DETERMINISTIC
+begin 
+	declare d int ;
+    set d = (a*b) * c ;
+    return d ;
+end $$
+    
+select sales, quantity, sales*quantity, GST(sales, quantity, 0.12) as GST from sales ;    
+
+-------------------------------------------------------
+
+#Procedure 
+
+
+delimiter $$
+create procedure p1 (IN a int)
+begin
+	SELECT * FROM BANK WHERE AGE = A ;
+END $$  
+
+CALL P1(40) ; 
+
+
+---------------------------------------------------
+CREATE DATABASE EVENET ;
+
+USE EVENET ;
+
+# event Creation
+
+CREATE TABLE tasks (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    task_name VARCHAR(255),
+    `status` VARCHAR(50),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+DELIMITER $$
+
+CREATE PROCEDURE add_task()
+BEGIN
+    INSERT INTO tasks (task_name, `status`) 
+    VALUES ('New Task', 'pending');
+END $$
+
+DELIMITER ;
+
+
+
+CREATE EVENT add_task_event
+ON SCHEDULE EVERY 1 MINUTE
+DO
+    CALL add_task();
+
+
+SET GLOBAL event_scheduler = ON;
+
+select * from tasks ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+    
+
+ 
